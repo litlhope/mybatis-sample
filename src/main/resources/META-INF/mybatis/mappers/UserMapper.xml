@@ -8,10 +8,10 @@
 	</select>
 
 	<insert id="insert" parameterType="User">
-		insert into user(email, user_name, tel, sex) values(#{email}, #{user_ame})
-		<selectKey keyProperty="id" resultType="long" order="AFTER">
-			CALL SCOPE_IDENTITY()
-		</selectKey>
+		insert into user(email, user_name) values(#{email}, #{user_name})
+		<!--<selectKey keyProperty="id" resultType="long" order="AFTER">-->
+			<!--CALL SCOPE_IDENTITY()-->
+		<!--</selectKey>-->
 	</insert>
 
 </mapper>

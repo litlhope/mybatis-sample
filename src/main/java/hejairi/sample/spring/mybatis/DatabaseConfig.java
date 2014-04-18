@@ -54,17 +54,25 @@ public class DatabaseConfig implements InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
+		log.info("afterPropertiesSet");
+		Flyway flyway = new Flyway();
+		flyway.setDataSource(dataSource());
+		flyway.setLocations("classpath:db/migration");
+		flyway.setSqlMigrationPrefix("V");
+		flyway.setSqlMigrationSuffix(".sql");
+		flyway.setEncoding("UTF-8");
+
+		if (!flyway.isInitOnMigrate()) {
+			log.info("isInitOnMigrate: false");
+			try {
+				flyway.init();
+				log.info("flyway init");
+			} catch (FlywayException ex) {
+				log.warn("", ex);
+			}
+		}
 		try {
-			log.info("afterPropertiesSet");
-			Flyway flyway = new Flyway();
-			flyway.setDataSource(dataSource());
-			flyway.setLocations("classpath:db/migration");
-			flyway.setSqlMigrationPrefix("V");
-			flyway.setSqlMigrationSuffix(".sql");
-			flyway.setEncoding("UTF-8");
-			flyway.init();
 			flyway.migrate();
-			log.info("flyway migrated!");
 		} catch (FlywayException ex) {
 			log.warn("", ex);
 		}

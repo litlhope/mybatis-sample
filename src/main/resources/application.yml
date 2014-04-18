@@ -1,0 +1,27 @@
+myapp:
+  hello: Hello
+  name: Phil
+jdbc:
+  driver: com.mysql.jdbc.Driver
+  url: jdbc:mysql://localhost/test?autoReconnect=true&useUnicode=true&characterEncoding=utf8
+  username: test
+  password: test123
+  maxIdle: 20
+  maxActive: 400
+  maxWait: 10000
+  validationQuery: SELECT 1
+---
+
+spring:
+  profiles: goodbye,dev
+myapp:
+  name: Everyone
+
+#spring.datasource.driverClassName=com.mysql.jdbc.Driver
+#spring.datasource.url=jdbc:mysql://localhost/theeye?autoReconnect=true&useUnicode=true&characterEncoding=utf8
+#spring.datasource.username=root
+#spring.datasource.password=
+#spring.datasource.maxIdle=20
+#spring.datasource.maxActive=400
+#spring.datasource.maxWait=10000
+#spring.datasource.validationQuery=SELECT 1

@@ -1,0 +1,59 @@
+buildscript {
+	repositories {
+		maven { url "http://repo.spring.io/libs-snapshot" }
+		mavenLocal()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.1.RELEASE")
+		classpath("com.googlecode.flyway:flyway-gradle-plugin:2.3")
+	}
+}
+
+apply plugin: "java"
+//apply plugin: "eclipse"
+apply plugin: "idea"
+apply plugin: "spring-boot"
+apply plugin: "flyway"
+
+jar {
+	baseName = 'mybatis-sample'
+	version = '0.1.0'
+}
+
+repositories {
+	mavenCentral()
+	maven { url "http://repo.spring.io/libs-snapshot" }
+}
+
+dependencies {
+	// spring
+	compile("org.springframework.boot:spring-boot-starter-web")
+	// data access
+	compile("org.springframework:spring-jdbc")
+	compile("org.mybatis:mybatis:3.2.+")
+	compile("org.mybatis:mybatis-spring:1.2.+")
+	compile("mysql:mysql-connector-java")
+	compile("commons-dbcp:commons-dbcp")
+	compile("com.googlecode.flyway:flyway-gradle-plugin:2.+")
+	// yaml
+	compile("org.yaml:snakeyaml")
+	// logging
+	compile("org.slf4j:slf4j-api")
+	compile("org.slf4j:jcl-over-slf4j")
+	compile("ch.qos.logback:logback-classic")
+	// annotation
+	compile("org.projectlombok:lombok:1.+");
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.11'
+}
+
+flyway {
+	driver = 'com.mysql.jdbc.Driver'
+	url = 'jdbc:mysql://localhost/test?autoReconnect=true&useUnicode=true&characterEncoding=utf8'
+	user = 'test'
+	password = 'test123'
+//	locations = ['classpath:db/migration']
+//	schemas = ['test']
+}

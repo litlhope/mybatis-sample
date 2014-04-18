@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- MyBatis는 namespace의 값인 hejairi.sample.spring.mybatis.module.UserMapper 인터페이스를 매퍼로 연결한다. -->
+<mapper namespace="hejairi.sample.spring.mybatis.module.UserMapper">
+
+	<select id="findById" resultType="User">
+		select id, email, user_name from user
+	</select>
+
+	<insert id="insert" parameterType="User">
+		insert into user(email, user_name, tel, sex) values(#{email}, #{user_ame})
+		<selectKey keyProperty="id" resultType="long" order="AFTER">
+			CALL SCOPE_IDENTITY()
+		</selectKey>
+	</insert>
+
+</mapper>

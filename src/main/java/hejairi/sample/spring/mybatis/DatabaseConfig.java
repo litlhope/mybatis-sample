@@ -53,6 +53,11 @@ public class DatabaseConfig implements InitializingBean {
 		return new DataSourceTransactionManager(dataSource());
 	}
 
+	/**
+	 * Properties 설정 완료 후 처리 내용 지정
+	 *   - DB DDL 실행
+	 * @throws Exception
+	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		log.info("afterPropertiesSet");

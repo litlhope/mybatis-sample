@@ -23,6 +23,12 @@ public class UserController {
 		return user;
 	}
 
+	@RequestMapping(method = RequestMethod.GET)
+	public List<User> getAllUser() {
+		List<User> users = userMapper.findAll();
+		return users;
+	}
+
 //	@RequestMapping(method = RequestMethod.POST)
 //	public User insert(@RequestParam User user) {
 //		return user;

@@ -57,6 +57,6 @@ appender('daily', RollingFileAppender) {
 //	triggeringPolicy(ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy) {
 //		maxFileSize = '100MB' // 파일 크기 100MB될때마다 롤링
 //	}
-}
+//}
 
 root(INFO, ['console', 'daily'])

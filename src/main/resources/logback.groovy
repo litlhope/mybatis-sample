@@ -40,23 +40,23 @@ appender('daily', RollingFileAppender) {
 	}
 }
 
-appender('fixedWindowRollingFile', RollingFileAppender) {
-	file = 'logs/fixedWindowRollingFile.log'
-	append = true
-
-	encoder(PatternLayoutEncoder) {
-		pattern = '%-5level %d{yyyy-MM-dd HH:mm:ss} [%thread] %logger{36} - %msg%n'
-	}
-
-	rollingPolicy(ch.qos.logback.core.rolling.FixedWindowRollingPolicy) {
-		fileNamePattern = 'logs/fixedWindowRollingFile.log.%i'
-		minIndex = 1 // xx.log.1 ~ xx.log.5
-		maxIndex = 5
-	}
-
-	triggeringPolicy(ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy) {
-		maxFileSize = '100MB' // 파일 크기 100MB될때마다 롤링
-	}
+//appender('fixedWindowRollingFile', RollingFileAppender) {
+//	file = 'logs/fixedWindowRollingFile.log'
+//	append = true
+//
+//	encoder(PatternLayoutEncoder) {
+//		pattern = '%-5level %d{yyyy-MM-dd HH:mm:ss} [%thread] %logger{36} - %msg%n'
+//	}
+//
+//	rollingPolicy(ch.qos.logback.core.rolling.FixedWindowRollingPolicy) {
+//		fileNamePattern = 'logs/fixedWindowRollingFile.log.%i'
+//		minIndex = 1 // xx.log.1 ~ xx.log.5
+//		maxIndex = 5
+//	}
+//
+//	triggeringPolicy(ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy) {
+//		maxFileSize = '100MB' // 파일 크기 100MB될때마다 롤링
+//	}
 }
 
-root(INFO, ['console'])
+root(INFO, ['console', 'daily'])

@@ -35,9 +35,9 @@ public class UserController {
 		User user = new User();
 		user.setId(System.currentTimeMillis());
 		user.setEmail(email);
-		user.setUserName(userName);
-		user.setTel(tel);
-		user.setSex(sex);
+		user.setUser_name(userName);
+//		user.setTel(tel);
+//		user.setSex(sex);
 		userMapper.insert(user);
 		return user;
 	}

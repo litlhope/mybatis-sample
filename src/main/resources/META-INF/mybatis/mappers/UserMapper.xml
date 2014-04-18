@@ -4,11 +4,11 @@
 <mapper namespace="hejairi.sample.spring.mybatis.module.UserMapper">
 
 	<select id="findById" resultType="User">
-		select id, email, user_name, tel, sex from user
+		select id, email, userName, tel, sex from user
 	</select>
 
 	<insert id="insert" parameterType="User">
-		insert into user(email, user_name, tel, sex) values(#{email}, #{user_name}, #{tel}, #{sex})
+		insert into user(email, userName, tel, sex) values(#{email}, #{userName}, #{tel}, #{sex})
 		<!--<selectKey keyProperty="id" resultType="long" order="AFTER">-->
 			<!--CALL SCOPE_IDENTITY()-->
 		<!--</selectKey>-->

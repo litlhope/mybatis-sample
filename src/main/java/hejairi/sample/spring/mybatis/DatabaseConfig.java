@@ -1,8 +1,8 @@
 package hejairi.sample.spring.mybatis;
 
 import com.googlecode.flyway.core.Flyway;
-import com.googlecode.flyway.core.api.FlywayException;
-import com.googlecode.flyway.core.api.MigrationVersion;
+import com.googlecode.flyway.core.api.*;
+import com.googlecode.flyway.core.info.MigrationInfoImpl;
 import hejairi.sample.spring.mybatis.core.mybatis.Mapper;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.mybatis.spring.annotation.MapperScan;
@@ -62,8 +62,11 @@ public class DatabaseConfig implements InitializingBean {
 		flyway.setSqlMigrationPrefix("V");
 		flyway.setSqlMigrationSuffix(".sql");
 		flyway.setEncoding("UTF-8");
-		// Init
-		if (!flyway.isInitOnMigrate()) {
+
+		MigrationInfoService infoService = flyway.info();
+		MigrationInfo info = infoService.current();
+		if (info == null) {
+			// Init
 			log.info("isInitOnMigrate: false");
 			try {
 				flyway.init();
@@ -72,11 +75,19 @@ public class DatabaseConfig implements InitializingBean {
 				log.warn("", ex);
 			}
 		}
-		
+
 		// Migration
-		MigrationVersion version = flyway.getTarget();
-		log.info("compareTo: " + version.compareTo(flyway.getInitVersion()));
-		if (version.compareTo(flyway.getInitVersion()) > 0) {
+		boolean wantMigrate = false;
+		if (info == null) {
+			wantMigrate = true;
+		} else {
+			MigrationInfo[] infos = infoService.all();
+			MigrationInfo lastInfo = infos[infos.length - 1];
+			if (lastInfo.getState().equals(MigrationState.PENDING)) {
+				wantMigrate = true;
+			}
+		}
+		if (wantMigrate) {
 			try {
 				flyway.migrate();
 			} catch (FlywayException ex) {

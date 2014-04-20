@@ -3,15 +3,15 @@
 <!-- MyBatis는 namespace의 값인 hejairi.sample.spring.mybatis.module.UserMapper 인터페이스를 매퍼로 연결한다. -->
 <mapper namespace="hejairi.sample.spring.mybatis.module.UserMapper">
 
-	<select id="findById" resultType="User" parameterType="Long">
+	<select id="findById" resultType="hejairi.sample.spring.mybatis.model.User" parameterType="java.lang.Long">
 		select id, email, userName, tel, sex from user where id = #{id}
 	</select>
 
-	<select id="findAll" resultType="User">
+	<select id="findAll" resultType="hejairi.sample.spring.mybatis.model.User">
 		select id, email, userName, tel, sex from user
 	</select>
 
-	<insert id="insert" parameterType="User">
+	<insert id="insert" parameterType="hejairi.sample.spring.mybatis.model.User">
 		insert into user(email, userName, tel, sex) values(#{email}, #{userName}, #{tel}, #{sex})
 		<!--<selectKey keyProperty="id" resultType="long" order="AFTER">-->
 			<!--CALL SCOPE_IDENTITY()-->

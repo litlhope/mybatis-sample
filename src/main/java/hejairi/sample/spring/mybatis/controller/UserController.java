@@ -17,7 +17,7 @@ public class UserController {
 	@Autowired
 	private UserMapper userMapper;
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "{id:[0-9]+]}", method = RequestMethod.GET)
 	public User getUser(@PathVariable("id") Long id) {
 		User user = userMapper.findById(id);
 		return user;

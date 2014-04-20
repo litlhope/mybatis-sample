@@ -9,7 +9,9 @@ import lombok.Data;
 public class User {
 	private Long id;
 	private String email;
-	private String user_name;
+	private String userName;
+	private String tel;
+	private String sex;
 
 	@Override
 	public boolean equals(Object o) {

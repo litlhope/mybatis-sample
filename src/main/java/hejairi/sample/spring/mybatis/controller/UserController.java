@@ -17,10 +17,16 @@ public class UserController {
 	@Autowired
 	private UserMapper userMapper;
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "{id:[0-9]+]}", method = RequestMethod.GET)
 	public User getUser(@PathVariable("id") Long id) {
 		User user = userMapper.findById(id);
 		return user;
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	public List<User> getAllUser() {
+		List<User> users = userMapper.findAll();
+		return users;
 	}
 
 //	@RequestMapping(method = RequestMethod.POST)
@@ -35,9 +41,9 @@ public class UserController {
 		User user = new User();
 		user.setId(System.currentTimeMillis());
 		user.setEmail(email);
-		user.setUser_name(userName);
-//		user.setTel(tel);
-//		user.setSex(sex);
+		user.setUserName(userName);
+		user.setTel(tel);
+		user.setSex(sex);
 		userMapper.insert(user);
 		return user;
 	}

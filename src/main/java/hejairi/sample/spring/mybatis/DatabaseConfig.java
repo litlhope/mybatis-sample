@@ -1,7 +1,8 @@
 package hejairi.sample.spring.mybatis;
 
 import com.googlecode.flyway.core.Flyway;
-import com.googlecode.flyway.core.api.FlywayException;
+import com.googlecode.flyway.core.api.*;
+import com.googlecode.flyway.core.info.MigrationInfoImpl;
 import hejairi.sample.spring.mybatis.core.mybatis.Mapper;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.mybatis.spring.annotation.MapperScan;
@@ -52,21 +53,51 @@ public class DatabaseConfig implements InitializingBean {
 		return new DataSourceTransactionManager(dataSource());
 	}
 
+	/**
+	 * Properties 설정 완료 후 처리 내용 지정
+	 *   - DB DDL 실행
+	 * @throws Exception
+	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		try {
-			log.info("afterPropertiesSet");
-			Flyway flyway = new Flyway();
-			flyway.setDataSource(dataSource());
-			flyway.setLocations("classpath:db/migration");
-			flyway.setSqlMigrationPrefix("V");
-			flyway.setSqlMigrationSuffix(".sql");
-			flyway.setEncoding("UTF-8");
-			flyway.init();
-			flyway.migrate();
-			log.info("flyway migrated!");
-		} catch (FlywayException ex) {
-			log.warn("", ex);
+		log.info("afterPropertiesSet");
+		Flyway flyway = new Flyway();
+		flyway.setDataSource(dataSource());
+		flyway.setLocations("classpath:db/migration");
+		flyway.setSqlMigrationPrefix("V");
+		flyway.setSqlMigrationSuffix(".sql");
+		flyway.setEncoding("UTF-8");
+
+		MigrationInfoService infoService = flyway.info();
+		MigrationInfo info = infoService.current();
+		if (info == null) {
+			// Init
+			log.info("isInitOnMigrate: false");
+			try {
+				flyway.init();
+				log.info("flyway init");
+			} catch (FlywayException ex) {
+				log.warn("", ex);
+			}
+		}
+
+		// Migration
+		boolean wantMigrate = false;
+		if (info == null) {
+			wantMigrate = true;
+		} else {
+			MigrationInfo[] infos = infoService.all();
+			MigrationInfo lastInfo = infos[infos.length - 1];
+			if (lastInfo.getState().equals(MigrationState.PENDING)) {
+				wantMigrate = true;
+			}
+		}
+		if (wantMigrate) {
+			try {
+				flyway.migrate();
+			} catch (FlywayException ex) {
+				log.warn("", ex);
+			}
 		}
 	}
 }

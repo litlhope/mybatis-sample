@@ -20,4 +20,12 @@ myApp.filter("reverse", function() {
 
 myApp.controller("FilterCtrl", ["$scope", function($scope) {
 	$scope.greeting = "Todd Motto";
+
+	$scope.numbers = [1, 5, 3, 20, 100, 63, 25, 97, 28];
+	$scope.lowerBound = 42;
+
+	// 컨트롤러 내부의 필터?
+	$scope.greaterThanNum = function(item) {
+		return item > $scope.lowerBound;
+	}
 }]);

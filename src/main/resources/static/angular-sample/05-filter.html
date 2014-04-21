@@ -11,7 +11,7 @@
 	<div ng-controller="FilterCtrl">
 		greeting: <input type="text" ng-model="greeting" />
 		<p>No Filter: {{greeting}}</p>
-		<p>Reverse: {{greeting | reverse}}</p>
+		<p>Reverse: {{greeting | reverse:true}}</p>
 	</div>
 </div>
 <script src="05-filter.js"></script>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head lang="ko">
+	<meta charset="UTF-8">
+	<title>Model-View View-Model 예제</title>
+	<!-- Angular.js 라이브러리 -->
+	<script src="../lib/angular.js"></script>
+</head>
+<body>
+<div ng-app="myApp">
+	<div ng-controller="MainCtrl">
+		<input type="text" ng-model="myModel" placeholder="Start typing..." />
+		<p>My Model Data: {{myModel}}</p>
+	</div>
+</div>
+<script src="06-mvvm.js"></script>
+</body>
+</html>

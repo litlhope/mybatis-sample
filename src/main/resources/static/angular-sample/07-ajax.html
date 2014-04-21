@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head lang="ko">
+	<meta charset="UTF-8">
+	<title>Ajax 예제</title>
+	<!-- Angular.js 라이브러리 -->
+	<script src="../lib/angular.js"></script>
+</head>
+<body>
+<div ng-app="myApp">
+	<div ng-controller="MainCtrl">
+		이름: <input type="text" ng-model="searchName" />
+		<ul>
+			<li ng-repeat="user in users | filter:search">{{user.userName}}</li>
+		</ul>
+	</div>
+</div>
+<script src="07-ajax.js"></script>
+</body>
+</html>

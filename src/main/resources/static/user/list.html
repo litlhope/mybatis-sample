@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head lang="ko">
-	<meta charset="UTF-8">
-	<title>사용자 목록</title>
-	<script src="../lib/angular.js"></script>
-</head>
-<body>
-<div ng-app="myApp">
-	<div ng-controller="MainCtrl">
+<ul>
+	<li ng-repeat="user in users">
+		<a href="/user/modify/{{user.id}}">{{user.userName}}</a>
+	</li>
+</ul>
 
-	</div>
-</div>
-<script src="../js/user.js"></script>
-</body>
-</html>
+<button type="button" ng-click="createUser()">등록</button>

@@ -20,6 +20,14 @@ public class UserController {
 	@Autowired
 	private UserMapper userMapper;
 
+	/*
+	 * RESTful
+	 */
+	/**
+	 *
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "{id:[0-9]+}", method = RequestMethod.GET)
 	public User getUser(@PathVariable("id") Long id) {
 		User user = userMapper.findById(id);
@@ -37,16 +45,24 @@ public class UserController {
 //		return user;
 //	}
 	@RequestMapping(method = RequestMethod.POST)
-	public User insert(@RequestParam("email") String email,
-					   @RequestParam("user_name") String userName,
-					   @RequestParam("tel") String tel,
-					   @RequestParam("sex") String sex) {
-		User user = new User();
-		user.setEmail(email);
-		user.setUserName(userName);
-		user.setTel(tel);
-		user.setSex(sex);
+	public User insert(@RequestParam User user) {
+		log.info(user.toString());
 		userMapper.insert(user);
 		return user;
 	}
+
+	/*
+	 * Page action
+	 */
+//	@RequestMapping(value = "modify/{id:[0-9]+}", method = RequestMethod.GET)
+//	public ModelAndView redirectModifyView(@PathVariable("id") Long id, ModelMap model) {
+//		ModelAndView modelAndView = null;
+//		RedirectView redirectView = new RedirectView("/user/form.html");
+//		redirectView.setContextRelative(true);
+//
+//		model.put("id", id);
+//
+//		modelAndView = new ModelAndView(redirectView, model);
+//		return modelAndView;
+//	}
 }

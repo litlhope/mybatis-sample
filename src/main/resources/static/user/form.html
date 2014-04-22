@@ -1,0 +1,22 @@
+id: {{params.id}}
+<ul>
+	<li>
+		이름:<input type="text" ng-model="user.userName" required  />
+	</li>
+	<li>
+		메일:<input type="email" ng-model="user.email" />
+	</li>
+	<li>
+		전화번호:<input type="tel" ng-model="user.tel" />
+	</li>
+	<li>
+		성별:
+		<select ng-model="user.sex">
+			<option value="F">여성</option>
+			<option value="M">남성</option>
+		</select>
+	</li>
+	<li>
+		<button type="button" ng-click="save(params.id)">전송</button>
+	</li>
+</ul>

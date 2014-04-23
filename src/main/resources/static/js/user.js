@@ -7,7 +7,8 @@ myApp.controller("MainCtrl", ["$scope", "$http", function($scope, $http) {
 
 }]);
 
-myApp.controller("ListCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
+myApp.controller("ListCtrl", ["$scope", "$http", "$location", "$route",
+		function($scope, $http, $location, $route) {
 	// 사용자 데이터를 가져온다.
 	$http({
 		method: "GET",
@@ -22,6 +23,16 @@ myApp.controller("ListCtrl", ["$scope", "$http", "$location", function($scope, $
 
 	$scope.createUser = function() {
 		$location.path("/user/add");
+	}
+
+	$scope.delete = function(id) {
+//		$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+		$http.delete("/user/" + id).success(function(data, status, headers, config) {
+//			$location.path("/user/list");
+			$route.reload();
+		}).error(function(data, status, headers, config) {
+			alert("error");
+		});
 	}
 }]);
 

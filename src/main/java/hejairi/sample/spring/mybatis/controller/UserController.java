@@ -50,4 +50,10 @@ public class UserController {
 		userMapper.update(user);
 		return user;
 	}
+
+	@RequestMapping(value = "{id:[0-9+]}", method = RequestMethod.DELETE)
+	public void delete(@PathVariable("id") Long id) {
+		log.info("delete: " + id);
+		userMapper.delete(id);
+	}
 }

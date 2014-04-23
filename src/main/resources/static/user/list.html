@@ -1,0 +1,7 @@
+<ul>
+	<li ng-repeat="user in users">
+		<a href="/user/modify/{{user.id}}">{{user.userName}}</a>
+	</li>
+</ul>
+
+<button type="button" ng-click="createUser()">등록</button>

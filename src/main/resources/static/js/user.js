@@ -45,6 +45,7 @@ myApp.controller("FormCtrl", ["$scope", "$http", "$routeParams", function($scope
 		if (id) {
 			$http.put("/user", $scope.user);
 		} else {
+			$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 			$http.post("/user", $scope.user)
 				.success(function(data, status, headers, config) {
 					$location.path("/user/list");

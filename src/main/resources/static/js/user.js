@@ -43,19 +43,14 @@ myApp.controller("FormCtrl", ["$scope", "$http", "$routeParams", "$location",
 
 	$scope.save = function(id) {
 		console.log($scope.user);
-		if (id) {
-			$http.put("/user", $scope.user);
-		} else {
-//			$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-			$http.defaults.headers.post["Content-Type"] = "application/json; charset=UTF-8";
-			$http.post("/user", $scope.user)
-				.success(function(data, status, headers, config) {
-					$location.path("/user/list");
-				})
-				.error(function(data, status, headers, config) {
-					alert("error");
-				});
-		}
+		var requestFunc = id ? $http.put : $http.post;
+
+		$http.defaults.headers.post["Content-Type"] = "application/json; charset=UTF-8";
+		requestFunc("/user", $scope.user).success(function(data, status, headers, config) {
+			$location.path("/user/list");
+		}).error(function(data, status, headers, config) {
+			alert("error");
+		});
 	}
 }]);
 

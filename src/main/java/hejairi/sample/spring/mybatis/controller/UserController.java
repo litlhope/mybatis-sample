@@ -45,7 +45,7 @@ public class UserController {
 //		return user;
 //	}
 	@RequestMapping(method = RequestMethod.POST)
-	public User insert(@RequestParam User user) {
+	public User insert(@RequestBody User user) {
 		log.info(user.toString());
 		userMapper.insert(user);
 		return user;

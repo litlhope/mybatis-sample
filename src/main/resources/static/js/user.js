@@ -25,7 +25,8 @@ myApp.controller("ListCtrl", ["$scope", "$http", "$location", function($scope, $
 	}
 }]);
 
-myApp.controller("FormCtrl", ["$scope", "$http", "$routeParams", function($scope, $http, $routeParams) {
+myApp.controller("FormCtrl", ["$scope", "$http", "$routeParams", "$location",
+		function($scope, $http, $routeParams, $location) {
 	$scope.params = $routeParams;
 	if ($scope.params.id) {
 		$http({
@@ -45,7 +46,8 @@ myApp.controller("FormCtrl", ["$scope", "$http", "$routeParams", function($scope
 		if (id) {
 			$http.put("/user", $scope.user);
 		} else {
-			$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+//			$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+			$http.defaults.headers.post["Content-Type"] = "application/json; charset=UTF-8";
 			$http.post("/user", $scope.user)
 				.success(function(data, status, headers, config) {
 					$location.path("/user/list");

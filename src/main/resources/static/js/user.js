@@ -7,7 +7,8 @@ myApp.controller("MainCtrl", ["$scope", "$http", function($scope, $http) {
 
 }]);
 
-myApp.controller("ListCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
+myApp.controller("ListCtrl", ["$scope", "$http", "$location", "$route",
+		function($scope, $http, $location, $route) {
 	// 사용자 데이터를 가져온다.
 	$http({
 		method: "GET",
@@ -23,9 +24,20 @@ myApp.controller("ListCtrl", ["$scope", "$http", "$location", function($scope, $
 	$scope.createUser = function() {
 		$location.path("/user/add");
 	}
+
+	$scope.delete = function(id) {
+//		$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+		$http.delete("/user/" + id).success(function(data, status, headers, config) {
+//			$location.path("/user/list");
+			$route.reload();
+		}).error(function(data, status, headers, config) {
+			alert("error");
+		});
+	}
 }]);
 
-myApp.controller("FormCtrl", ["$scope", "$http", "$routeParams", function($scope, $http, $routeParams) {
+myApp.controller("FormCtrl", ["$scope", "$http", "$routeParams", "$location",
+		function($scope, $http, $routeParams, $location) {
 	$scope.params = $routeParams;
 	if ($scope.params.id) {
 		$http({
@@ -42,18 +54,14 @@ myApp.controller("FormCtrl", ["$scope", "$http", "$routeParams", function($scope
 
 	$scope.save = function(id) {
 		console.log($scope.user);
-		if (id) {
-			$http.put("/user", $scope.user);
-		} else {
-			$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-			$http.post("/user", $scope.user)
-				.success(function(data, status, headers, config) {
-					$location.path("/user/list");
-				})
-				.error(function(data, status, headers, config) {
-					alert("error");
-				});
-		}
+		var requestFunc = id ? $http.put : $http.post;
+
+		$http.defaults.headers.post["Content-Type"] = "application/json; charset=UTF-8";
+		requestFunc("/user", $scope.user).success(function(data, status, headers, config) {
+			$location.path("/user/list");
+		}).error(function(data, status, headers, config) {
+			alert("error");
+		});
 	}
 }]);
 

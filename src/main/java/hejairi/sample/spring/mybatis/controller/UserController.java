@@ -20,9 +20,6 @@ public class UserController {
 	@Autowired
 	private UserMapper userMapper;
 
-	/*
-	 * RESTful
-	 */
 	/**
 	 *
 	 * @param id
@@ -40,29 +37,23 @@ public class UserController {
 		return users;
 	}
 
-//	@RequestMapping(method = RequestMethod.POST)
-//	public User insert(@RequestParam User user) {
-//		return user;
-//	}
 	@RequestMapping(method = RequestMethod.POST)
-	public User insert(@RequestParam User user) {
+	public User insert(@RequestBody User user) {
 		log.info(user.toString());
 		userMapper.insert(user);
 		return user;
 	}
 
-	/*
-	 * Page action
-	 */
-//	@RequestMapping(value = "modify/{id:[0-9]+}", method = RequestMethod.GET)
-//	public ModelAndView redirectModifyView(@PathVariable("id") Long id, ModelMap model) {
-//		ModelAndView modelAndView = null;
-//		RedirectView redirectView = new RedirectView("/user/form.html");
-//		redirectView.setContextRelative(true);
-//
-//		model.put("id", id);
-//
-//		modelAndView = new ModelAndView(redirectView, model);
-//		return modelAndView;
-//	}
+	@RequestMapping(method = RequestMethod.PUT)
+	public User update(@RequestBody User user) {
+		log.info(user.toString());
+		userMapper.update(user);
+		return user;
+	}
+
+	@RequestMapping(value = "{id:[0-9+]}", method = RequestMethod.DELETE)
+	public void delete(@PathVariable("id") Long id) {
+		log.info("delete: " + id);
+		userMapper.delete(id);
+	}
 }

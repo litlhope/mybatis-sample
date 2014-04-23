@@ -3,19 +3,33 @@
 <!-- MyBatis는 namespace의 값인 hejairi.sample.spring.mybatis.module.UserMapper 인터페이스를 매퍼로 연결한다. -->
 <mapper namespace="hejairi.sample.spring.mybatis.module.UserMapper">
 
-	<select id="findById" resultType="hejairi.sample.spring.mybatis.model.User" parameterType="java.lang.Long">
-		select id, email, userName, tel, sex from user where id = #{id}
+	<select id="findById" resultType="User" parameterType="Long">
+		SELECT id, email, userName, tel, sex
+		FROM user
+		WHERE id = #{id}
 	</select>
 
-	<select id="findAll" resultType="hejairi.sample.spring.mybatis.model.User">
-		select id, email, userName, tel, sex from user
+	<select id="findAll" resultType="User">
+		SELECT id, email, userName, tel, sex
+		FROM user
 	</select>
 
-	<insert id="insert" parameterType="hejairi.sample.spring.mybatis.model.User">
-		insert into user(email, userName, tel, sex) values(#{email}, #{userName}, #{tel}, #{sex})
+	<insert id="insert" parameterType="User">
+		INSERT INTO user(email, userName, tel, sex)
+		VALUES (#{email}, #{userName}, #{tel}, #{sex})
 		<!--<selectKey keyProperty="id" resultType="long" order="AFTER">-->
 			<!--CALL SCOPE_IDENTITY()-->
 		<!--</selectKey>-->
 	</insert>
 
+	<update id="update" parameterType="User">
+		UPDATE user
+		SET email = #{email}, userName = #{userName}, tel = #{tel}, sex = #{sex}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="Long">
+		DELETE FROM user
+		WHERE id = #{id}
+	</delete>
 </mapper>

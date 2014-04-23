@@ -1,6 +1,7 @@
 <ul>
 	<li ng-repeat="user in users">
 		<a href="/user/modify/{{user.id}}">{{user.userName}}</a>
+		<button type="button" ng-click="delete(user.id)">삭제</button>
 	</li>
 </ul>
 

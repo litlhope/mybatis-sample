@@ -22,13 +22,13 @@ myApp.controller("ListCtrl", ["$scope", "$http", "$location", "$route",
 	});
 
 	$scope.createUser = function() {
-		$location.path("/user/add");
+		$location.path("/user/add").replace();
 	}
 
 	$scope.delete = function(id) {
 //		$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 		$http.delete("/user/" + id).success(function(data, status, headers, config) {
-//			$location.path("/user/list");
+//			$location.path("/user/list").replace();
 			$route.reload();
 		}).error(function(data, status, headers, config) {
 			alert("error");
@@ -58,7 +58,7 @@ myApp.controller("FormCtrl", ["$scope", "$http", "$routeParams", "$location",
 
 		$http.defaults.headers.post["Content-Type"] = "application/json; charset=UTF-8";
 		requestFunc("/user", $scope.user).success(function(data, status, headers, config) {
-			$location.path("/user/list");
+			$location.path("/user/list").replace();
 		}).error(function(data, status, headers, config) {
 			alert("error");
 		});
@@ -82,5 +82,13 @@ myApp.config(["$routeProvider", "$locationProvider", function($routeProvider, $l
 		.otherwise({
 			redirectTo: "/user/list"
 		});
-	$locationProvider.html5Mode(true);
+	/*
+	 * html5Mode를 사용하면 URL을 위의 when의 URL로 변경한다.
+	 * 이경우 브라우저의 새로고침 버튼을 누를 경우 404 Page Not Found. 가 발생한다.
+	 *
+	 * false로 하면 URL이
+	 * /user/main.html#/user/list 와 같은 형태로 작동된다.
+	 * 고객쪽에서는 보기 싫어 할수도... 다른 방법이 없는지 찾아봐야 할 듯 하다.
+	 */
+	$locationProvider.html5Mode(false);
 }]);

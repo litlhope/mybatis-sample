@@ -21,9 +21,13 @@ myApp.controller("ListCtrl", ["$scope", "$http", "$location", "$route",
 
 	});
 
+	$scope.modify = function(id) {
+		$location.path("/user/modify/" + id);
+	};
+
 	$scope.createUser = function() {
 		$location.path("/user/add");
-	}
+	};
 
 	$scope.delete = function(id) {
 //		$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
@@ -33,7 +37,7 @@ myApp.controller("ListCtrl", ["$scope", "$http", "$location", "$route",
 		}).error(function(data, status, headers, config) {
 			alert("error");
 		});
-	}
+	};
 }]);
 
 myApp.controller("FormCtrl", ["$scope", "$http", "$routeParams", "$location",
@@ -82,5 +86,13 @@ myApp.config(["$routeProvider", "$locationProvider", function($routeProvider, $l
 		.otherwise({
 			redirectTo: "/user/list"
 		});
-	$locationProvider.html5Mode(true);
+	/*
+	 * html5Mode를 사용하면 URL을 위의 when의 URL로 변경한다.
+	 * 이경우 브라우저의 새로고침 버튼을 누를 경우 404 Page Not Found. 가 발생한다.
+	 *
+	 * false로 하면 URL이
+	 * /user/main.html#/user/list 와 같은 형태로 작동된다.
+	 * 고객쪽에서는 보기 싫어 할수도... 다른 방법이 없는지 찾아봐야 할 듯 하다.
+	 */
+	$locationProvider.html5Mode(false);
 }]);

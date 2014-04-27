@@ -21,19 +21,23 @@ myApp.controller("ListCtrl", ["$scope", "$http", "$location", "$route",
 
 	});
 
+	$scope.modify = function(id) {
+		$location.path("/user/modify/" + id);
+	};
+
 	$scope.createUser = function() {
-		$location.path("/user/add").replace();
-	}
+		$location.path("/user/add");
+	};
 
 	$scope.delete = function(id) {
 //		$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 		$http.delete("/user/" + id).success(function(data, status, headers, config) {
-//			$location.path("/user/list").replace();
+//			$location.path("/user/list");
 			$route.reload();
 		}).error(function(data, status, headers, config) {
 			alert("error");
 		});
-	}
+	};
 }]);
 
 myApp.controller("FormCtrl", ["$scope", "$http", "$routeParams", "$location",
@@ -58,7 +62,7 @@ myApp.controller("FormCtrl", ["$scope", "$http", "$routeParams", "$location",
 
 		$http.defaults.headers.post["Content-Type"] = "application/json; charset=UTF-8";
 		requestFunc("/user", $scope.user).success(function(data, status, headers, config) {
-			$location.path("/user/list").replace();
+			$location.path("/user/list");
 		}).error(function(data, status, headers, config) {
 			alert("error");
 		});

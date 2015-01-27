@@ -5,4 +5,4 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_uq_email` UNIQUE(`email`);
+ADD CONSTRAINT `user_uq_email` UNIQUE(`email`);
